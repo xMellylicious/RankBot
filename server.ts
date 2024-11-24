@@ -29,7 +29,7 @@ import cors from "cors"
 import ratelimit from "express-rate-limit"
 
 // ===== ROUTES ===== //
-const rankCheckRoute = require("./routes/rankCheck.route")
+import rankCheckRoute from "./routes/rankCheck.route"
 
 // ===== EXPRESS ===== //
 const app = express()
@@ -41,12 +41,16 @@ class Server {
     public port: string;
 
 	constructor() {
+        if (!process.env.RBLX_TKN) {
+            console.log(`[WARNING] WORKING WITHOUT ROBLOX TOKEN`)
+        }
+
 		this.build()
 	}
 
 	async build() {
         this.app = express();
-        this.port = process.env.PORT || "5013"
+        this.port = process.env.PORT || "12333"
 
         //Initialise Custom Middleware
         this.initialiseMiddleware();
@@ -80,7 +84,7 @@ class Server {
 
     //Configures API Routes
     loadRoutes() {
-        this.app.use(rankCheckRoute)
+        this.app.use("/", rankCheckRoute)
     }
 
     //Opens a port for clients to connect to

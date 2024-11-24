@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 
-const checkRank = async (req: Request, res: Response, next: NextFunction) => {
+const updateRank = async (req: Request, res: Response, next: NextFunction) => {
     try {
         if (!req.header("UserId")) {return res.status(405).json({message: "User ID not provided"})}
         next()
@@ -9,4 +9,4 @@ const checkRank = async (req: Request, res: Response, next: NextFunction) => {
     }
 }
 
-export {checkRank}
+export {updateRank}
