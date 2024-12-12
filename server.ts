@@ -84,7 +84,7 @@ class Server {
 
     //Configures API Routes
     loadRoutes() {
-        this.app.use("/", rankCheckRoute)
+        this.app.use(rankCheckRoute)
     }
 
     //Opens a port for clients to connect to

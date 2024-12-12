@@ -1,9 +1,9 @@
 import express from "express";
-import { checkRank } from "../middleware/rankCheck.middleware";
-import { updateRank } from "../controllers/rankCheck.controller";
+import { checkRank } from "../middleware/roblox.middleware";
+import { updateRank } from "../controllers/rankUpdate.controller";
 
 const router = express.Router()
 
-router.put('update-rank', checkRank, updateRank)
+router.put('/rank', checkRank, updateRank)
 
 export default router
