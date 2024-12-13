@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import axios from "axios";
 import { config } from "../config"
 
-const checkRank = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+const checkMainGroupRank = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         if (!req.header("User-Id")) {res.status(405).json({message: "User ID not provided"}); return;}
 
@@ -35,6 +35,15 @@ const checkRank = async (req: Request, res: Response, next: NextFunction): Promi
     }
 }
 
+const checkSubGroupRank = async(req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+
+    } catch (e) {
+        res.status(500).json({message:e.message})
+        return;
+    }
+}
+
 const updateRank = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         res.status(200).json({body: "all is well"}); return;
@@ -43,4 +52,4 @@ const updateRank = async (req: Request, res: Response, next: NextFunction): Prom
     }
 }
 
-export {checkRank, updateRank}
+export {checkMainGroupRank, checkSubGroupRank, updateRank}
