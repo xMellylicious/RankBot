@@ -10,7 +10,8 @@ export const config = {
     },
 
     "mainGroup": {
-        "id": 12131659,
-        "rankId": 2
+        "id": 33293245,
+        "rankId": 2,
+        "roleId": 102840067
     }
 }

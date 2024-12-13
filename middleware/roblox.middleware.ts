@@ -36,7 +36,7 @@ const checkMainGroupRank = async (req: Request, res: Response, next: NextFunctio
         for (let data of resp.data.data) {
             if (data.group.id == config.mainGroup.id) {
                 isinGroup = true;
-                if (data.role.rank >= config.mainGroup.rankId) {
+                if (data.role.rank == config.mainGroup.rankId) {
                     res.status(405).json({body: "Player is already ranked"});
                     return;
                 }
@@ -77,6 +77,15 @@ const checkSubGroupRank = async (req: Request, res: Response, next: NextFunction
     }
 }
 
+const authenticateUser = async(req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+        if (!process.env.RBLX_TKN) {res.status(500).json({body: "Can't run the update function as no Roblox token was provided!"}); return;}
+
+    } catch (e) {
+
+    }
+}
+
 const updateRank = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         if (!process.env.RBLX_TKN) {res.status(500).json({body: "Can't run the update function as no Roblox token was provided!"}); return;}
@@ -84,13 +93,21 @@ const updateRank = async (req: Request, res: Response, next: NextFunction): Prom
         const resp = await axios({
             method: "patch",
             url: `https://groups.roblox.com/v1/groups/${config.mainGroup.id}/users/${req.header("User-Id")}`,
+            headers: {
+                'Content-Type': 'application/json',
+                "Cookie": `.ROBLOSECURITY=${process.env.RBLX_TKN}`,
+                "X-CSRF-TOKEN": ""
+            },
             data: {
-                "roleId": config.mainGroup.rankId
-            }
+                "roleId": config.mainGroup.roleId
+            },
+        }).catch(function(e) {
+            console.log(e.response.data)
         })
 
         res.status(200).json({body: "User has been ranked!"});
     } catch (e) {
+        console.log(e)
         res.status(500).json({message: e.message});
     }
 }
