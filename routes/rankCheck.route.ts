@@ -1,6 +1,5 @@
 import express from "express";
-import { checkRank } from "../middleware/roblox.middleware";
-import { updateRank } from "../controllers/rankUpdate.controller";
+import { checkRank, updateRank } from "../middleware/roblox.middleware";
 
 const router = express.Router()
 

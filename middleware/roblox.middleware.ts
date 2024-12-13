@@ -1,11 +1,12 @@
 import { Request, Response, NextFunction } from "express";
 import axios from "axios";
+import { config } from "../config"
 
 const checkRank = async (req: Request, res: Response, next: NextFunction) => {
     try {
         if (!req.header("User-Id")) {return res.status(405).json({message: "User ID not provided"})}
         
-        axios.get(`https://groups.roblox.com/v1/groups/15294045`)
+        /*axios.get(`https://groups.roblox.com/v1/groups/${config.mainGroup}`)
             .then(function(resp) {
                 console.log(resp)
             })
@@ -14,7 +15,13 @@ const checkRank = async (req: Request, res: Response, next: NextFunction) => {
             })
             .finally(function() {
                 next()
-            })
+            })*/
+
+        axios({
+            method: "get",
+            url: `https://groups.roblox.com/v1/groups/${config.mainGroup}`,
+            params: {}
+        })
 
         next()
     } catch (e) {
@@ -30,4 +37,4 @@ const updateRank = async (req: Request, res: Response, next: NextFunction) => {
     }
 }
 
-export {checkRank}
+export {checkRank, updateRank}
