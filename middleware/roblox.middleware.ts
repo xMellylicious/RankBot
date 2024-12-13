@@ -1,3 +1,19 @@
+/*
+server.js
+
+		___  ___ _____ _      _   __   __
+		|  \/  ||  ___| |    | |  \ \ / /
+		| .  . || |__ | |    | |   \ V / 
+		| |\/| ||  __|| |    | |    \ /  
+		| |  | || |___| |____| |____| |  
+		\_|  |_/\____/\_____/\_____/\_/  
+		
+			WRITTEN BY xMellylicious.
+					  
+			   ALL RIGHTS RESERVED   
+	
+*/
+
 import { Request, Response, NextFunction } from "express";
 import axios from "axios";
 import { config } from "../config"
