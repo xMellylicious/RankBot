@@ -20,7 +20,7 @@ const checkMainGroupRank = async (req: Request, res: Response, next: NextFunctio
         for (let data of resp.data.data) {
             if (data.group.id == config.mainGroup.id) {
                 isinGroup = true;
-                if (data.role.rank == config.mainGroup.rankId) {
+                if (data.role.rank >= config.mainGroup.rankId) {
                     res.status(405).json({body: "Player is already ranked"});
                     return;
                 }
@@ -44,8 +44,6 @@ const checkSubGroupRank = async (req: Request, res: Response, next: NextFunction
     try {
         if (!req["RobloxResp"]) { res.status(500).json({message: "Roblox did not provide a response"}); return; }
 
-        console.log(req["RobloxResp"]);
-
         for (let data of req["RobloxResp"]) {
             for (const [groupId, groupDetails] of Object.entries(groupsConfig)) {
                 if (data.group.id == groupId) {
@@ -67,7 +65,15 @@ const updateRank = async (req: Request, res: Response, next: NextFunction): Prom
     try {
         if (!process.env.RBLX_TKN) {res.status(500).json({body: "Can't run the update function as no Roblox token was provided!"}); return;}
 
-        res.status(200).json({body: "all is well"});
+        const resp = await axios({
+            method: "patch",
+            url: `https://groups.roblox.com/v1/groups/${config.mainGroup.id}/users/${req.header("User-Id")}`,
+            data: {
+                "roleId": config.mainGroup.rankId
+            }
+        })
+
+        res.status(200).json({body: "User has been ranked!"});
     } catch (e) {
         res.status(500).json({message: e.message});
     }

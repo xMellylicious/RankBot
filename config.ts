@@ -11,6 +11,6 @@ export const config = {
 
     "mainGroup": {
         "id": 12131659,
-        "rankId": 1
+        "rankId": 2
     }
 }
